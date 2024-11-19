@@ -25,7 +25,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.engine('ejs', ejsMate);
-app.use(express.static(path.join(__dirname,"/public")));
+app.use(express.static(path.join(__dirname, "/public")));
 
 app.get("/", (req, res) => {
     res.send("Hi, I am root");
@@ -34,6 +34,7 @@ app.get("/", (req, res) => {
 //Index Route 
 app.get("/listings", async (req, res) => {
     const allListings = await Listing.find({});
+    // console.log(allListings);
     res.render("listings/index.ejs", { allListings });
 });
 
@@ -47,7 +48,6 @@ app.get("/listings/new", (req, res) => {
 app.get("/listings/:id", async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id);
-    console.log(listing); 
     res.render("listings/show.ejs", { listing });
 });
 
@@ -97,4 +97,5 @@ app.delete("/listings/:id", async (req, res) => {
 
 app.listen(8080, () => {
     console.log("Server is listening to port 8080");
+    console.log("http://localhost:8080/listings");
 });
